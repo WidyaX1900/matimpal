@@ -1,6 +1,6 @@
 @section('footer')
     <footer class="fixed-bottom">
-        <a class="category active text-decoration-none">
+        <a href="/" class="category active text-decoration-none">
             <i class="fa-solid fa-message"></i>
             <small>Chat</small>
         </a>
