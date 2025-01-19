@@ -1,3 +1,58 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+:root {
+    --main-color: #ef983b;
+    --main-border: 1px solid rgba(0, 0, 0, 0.294);
+}
+
+/* ============================================================= */
+/* UTILITY                                                        */
+/* ============================================================= */
+.outline-main-color {
+    border: 1px solid var(--main-color);
+}
+/* ============================================================= */
+/* UTILITY                                                        */
+/* ============================================================= */
+
+/* ============================================================= */
+/* NAVBAR                                                        */
+/* ============================================================= */
+nav {
+    display: flex;
+    width: 100%;
+    padding: 15px 10px;
+    align-items: center;
+    border-bottom: var(--main-border);
+}
+/* ============================================================= */
+/* NAVBAR                                                        */
+/* ============================================================= */
+
+/* ============================================================= */
+/* FOOTER                                                        */
+/* ============================================================= */
+footer {
+    width: 100%;
+    border-top: var(--main-border);
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    padding: 15px 0;
+}
+
+footer .category {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: rgb(46, 46, 46);
+}
+
+footer .category i {
+    font-size: 1.3rem;
+}
+
+footer .category.active {
+    color: var(--main-color);
+}
+/* ============================================================= */
+/* FOOTER                                                        */
+/* ============================================================= */
