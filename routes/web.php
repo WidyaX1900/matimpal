@@ -11,6 +11,10 @@ Route::get('/chat/show', function () {
     return view('chats.show');
 });
 
+Route::get('/chat/friends', function () {
+    return view('chats.friends');
+});
+
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
