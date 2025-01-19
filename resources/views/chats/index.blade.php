@@ -19,6 +19,9 @@
                 </li>
             @endfor
         </ul>
+        <a href="" class="new-chat-btn">
+            <i class="fa-solid fa-message"></i>
+        </a>
     </section>
 @endsection
 @extends('layout.footer')
