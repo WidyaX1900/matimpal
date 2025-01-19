@@ -29,6 +29,7 @@ nav {
     align-items: center;
     border-bottom: var(--main-border);
     background: white;
+    align-items: center;
 }
 /* ============================================================= */
 /* NAVBAR                                                        */
@@ -55,18 +56,21 @@ main {
     overflow-x: hidden;
 }
 
-.chat-content ul li {
+.chat-content ul li a {
     width: 100%;
     background: white;
     display: flex;
     padding: 1rem 0.7rem;
     background: white;
     border-radius: 4px;
+    text-decoration: none;
+    color: black;
 }
 
-.chat-content ul li i {
+.chat-content ul li a i {
     font-size: 2.2rem;
     margin-right: 0.5rem;
+    color: var(--main-color);
 }
 
 .chat-content ul li .chat-info {
@@ -78,6 +82,87 @@ main {
 .chat-content ul li .chat-info .friend-info {
     display: flex;
     flex-direction: column;
+}
+
+.chat-footer {
+    width: 100%;
+    height: 13vh;
+    border-top: var(--main-border);
+    background: white;
+}
+
+.chat-footer .send-chat-btn {
+    width: 40px;
+    height: 40px;
+    background: var(--main-color);
+    border: none;
+    border-radius: 10px;
+    padding: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.chat-footer .send-chat-btn i {
+    font-size: 1.3rem;
+}
+
+.chat-footer textarea {
+    height: 50px;
+}
+
+.show-chat-content ul {
+    list-style: none;
+    width: 100%;
+    height: 77vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+    background: white;
+    display: flex;
+    flex-direction: column-reverse;
+}
+
+.show-chat-content ul li {
+    width: 100%;
+    background: white;
+    display: flex;
+    padding: 1rem 0.7rem;
+    position: relative;
+}
+
+.show-chat-content ul li.my-message {
+    justify-content: flex-end;
+}
+
+.show-chat-content ul li .chat-box {
+    min-width: 100px;
+    max-width: 80%;
+    padding: 0.8rem;
+}
+
+.show-chat-content ul li.my-message .chat-box {
+    background: var(--main-color);
+    color: rgb(252, 251, 251);
+}
+
+.show-chat-content ul li.my-message .fa-solid.fa-sort-down {
+    color: var(--main-color);
+    position: absolute;
+    right: 18px;
+    bottom: 3px;
+    font-size: 3rem;
+}
+
+.show-chat-content ul li.message .chat-box {
+    background: rgb(207, 207, 207);
+}
+
+.show-chat-content ul li.message .fa-solid.fa-sort-down {
+    color: rgb(207, 207, 207);
+    position: absolute;
+    left: 18px;
+    bottom: 3px;
+    font-size: 3rem;
 }
 /* ============================================================= */
 /* CHAT                                                          */
