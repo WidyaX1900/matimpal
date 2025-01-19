@@ -4,9 +4,12 @@
             <i class="fa-solid fa-message"></i>
             <small>Chat</small>
         </a>
-        <a class="category text-decoration-none">
-            <i class="fa-solid fa-circle-user"></i>
-            <small>Profile</small>
-        </a>
+        <form action="{{ route('logout') }}" method="POST">
+            @csrf
+            <button type="submit" class="category text-decoration-none">
+                <i class="fa-solid fa-circle-user"></i>
+                <small>Profile</small>
+            </button>
+        </form>
     </footer>
 @endsection
