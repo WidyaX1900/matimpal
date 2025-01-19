@@ -1,12 +1,12 @@
 @section('footer')
     <footer class="fixed-bottom">
-        <div class="category active">
+        <a class="category active text-decoration-none">
             <i class="fa-solid fa-message"></i>
             <small>Chat</small>
-        </div>
-        <div class="category">
+        </a>
+        <a class="category text-decoration-none">
             <i class="fa-solid fa-circle-user"></i>
             <small>Profile</small>
-        </div>
+        </a>
     </footer>
 @endsection
