@@ -73,6 +73,10 @@ main {
     color: var(--main-color);
 }
 
+.chat-content ul li a .vicall-icon {
+    font-size: 1.5rem;
+}
+
 .chat-content ul li .chat-info {
     width: 100%;
     display: flex;
@@ -220,4 +224,89 @@ footer .category.active {
 }
 /* ============================================================= */
 /* FOOTER                                                        */
+/* ============================================================= */
+
+/* ============================================================= */
+/* VIDEO CALL                                                    */
+/* ============================================================= */
+.videocall-container {
+    width: 100vw;
+    height: 100vh;
+    background: black;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1031;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding: 3.5rem 0;
+}
+
+.videocall-container video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    animation: faded 1.5s ease-in forwards;
+    transform: rotateY(180deg);
+}
+
+.videocall-container .friend-info {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: unset;
+}
+
+.videocall-container .friend-info i {
+    font-size: 8rem;
+    margin-bottom: .5rem;
+}
+
+.videocall-container .friend-info h6 {
+    font-size: 1.5rem;
+    color: rgb(244, 244, 244);
+}
+
+.videocall-container .vicall-navigator {
+    display: flex;
+    max-width: 258px;
+    width: 100%;
+}
+
+.videocall-container .vicall-navigator.vicall-navigator--center {
+    justify-content: center;
+}
+
+.videocall-container .vicall-navigator.vicall-navigator--between {
+    justify-content: space-between;
+}
+
+.videocall-container .vicall-navigator .btn.btn-danger {
+    width: fit-content;
+    height: fit-content;
+    padding: 20px;
+}
+
+.videocall-container .vicall-navigator .btn.btn-danger i {
+    font-size: 1.5rem;
+}
+
+@keyframes faded {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+/* ============================================================= */
+/* VIDEO CALL                                                    */
 /* ============================================================= */

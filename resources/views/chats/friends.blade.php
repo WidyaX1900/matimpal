@@ -9,18 +9,19 @@
 @section('content')
     <section class="chat-content">
         <ul class="p-0 friend-list">
-            @for ($i = 0; $i < 10; $i++)
+            @foreach ($friends as $friend)
                 <li class="mb-3">
-                    <a href="/chat/show">
-                        <i class="fa-solid fa-circle-user"></i>
+                    <a>
+                        <i class="fa-solid fa-circle-user text-secondary"></i>
                         <div class="chat-info">
                             <div class="friend-info">
-                                <strong>Friend Name</strong>
+                                <strong>{{ $friend->name }}</strong>
                             </div>
                         </div>
+                        <i class="fa-solid fa-video vicall-icon" data-receiver="{{ $friend->name }}"></i>
                     </a>
                 </li>
-            @endfor
-        </ul>
+            @endforeach
+        </ul>    
     </section>
 @endsection

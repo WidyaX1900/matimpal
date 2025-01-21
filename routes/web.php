@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\FriendController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -12,9 +13,7 @@ Route::middleware('auth')->group(function () {
         return view('chats.show');
     })->name('chat.show');
 
-    Route::get('/chat/friends', function () {
-        return view('chats.friends');
-    })->name('chat.friends');
+    Route::get('/chat/friends', [FriendController::class, 'friends'])->name('chat.friends');
 });
 
 require __DIR__.'/auth.php';

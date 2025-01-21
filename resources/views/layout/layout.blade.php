@@ -18,7 +18,7 @@
         @yield('content')
     </main>
     @yield('footer')
-    @vite(['resources/js/app.js'])
+    @vite(['resources/js/app.js', 'resources/js/script.js'])
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
         integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous">
     </script>
