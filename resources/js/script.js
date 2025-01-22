@@ -5,18 +5,29 @@ let ringtone = $("#callSfx")[0];
 $(document).ready(function() {
     $(".friend-list li .vicall-icon").on("click", function(){
         const $receiver = $(this).data("receiver");
+        $(".videocall-container .vicall-navigator").html(`
+            <button type="button" class="btn btn-danger rounded-circle close-vicall-btn">
+                <i class="fa-solid fa-video-slash"></i>
+            </button>
+        `);
         ringtone.loop = true;
         ringtone.play();
         loadVideo($receiver);                                 
     });
 
-    $(".videocall-container .vicall-navigator .close-vicall-btn").on("click", function() {
-        closeCamera();        
+    $(".videocall-container").on("click",".vicall-navigator .close-vicall-btn", function(){
+        closeCamera();
         video.srcObject = null;
         video.remove();
         ringtone.pause();
         ringtone.currentTime = 0;
         $(".videocall-container").addClass("d-none");
+    });
+    
+    $(".videocall-container").on("click",".vicall-navigator .accept-vicall-btn", function(){
+        $(".videocall-container .vicall-navigator").html(
+            `<small class="redirect-text">Direct to videocall...</small>`
+        );
     });
 });
 

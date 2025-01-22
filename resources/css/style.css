@@ -289,14 +289,22 @@ footer .category.active {
     justify-content: space-between;
 }
 
-.videocall-container .vicall-navigator .btn.btn-danger {
+.videocall-container .vicall-navigator .btn {
     width: fit-content;
     height: fit-content;
     padding: 20px;
 }
 
-.videocall-container .vicall-navigator .btn.btn-danger i {
+.videocall-container .vicall-navigator .btn i {
     font-size: 1.5rem;
+}
+
+.videocall-container .vicall-navigator .redirect-text {
+    font-size: 1rem;
+    color: white;
+    margin: 0 auto;
+    animation: animatedText 5s linear infinite;
+    opacity: .5;
 }
 
 @keyframes faded {
@@ -305,6 +313,20 @@ footer .category.active {
     }
     to {
         opacity: 1;
+    }
+}
+
+@keyframes animatedText {
+    50% {
+        opacity: .5;
+    }
+
+    75% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: .5;
     }
 }
 /* ============================================================= */
