@@ -29,21 +29,4 @@ class FriendController extends Controller
         
         return view('chats.friends', ['friends' => $users]);
     }
-
-    public function test()
-    {
-        $data = ['name' => Auth::user()->name];
-        $this->_sendToSocket('get-info', $data);
-        echo "Test Socket";
-    }
-
-    private function _sendToSocket($event, $data = [])
-    {
-        $client = $this->client;
-        $client->connect();
-        $client->of('/');
-        
-        $client->emit($event, $data);
-        $client->disconnect();
-    }
 }
