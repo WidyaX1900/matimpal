@@ -17,6 +17,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/chat/friends', [FriendController::class, 'friends'])->name('chat.friends');
     
     Route::get('/server/test', [ServerController::class, 'test'])->name('server.tes');
+    
+    Route::get('/server/receive', [ServerController::class, 'receive'])->name('server.receive');
 });
 
 require __DIR__.'/auth.php';

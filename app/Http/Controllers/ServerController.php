@@ -26,6 +26,11 @@ class ServerController extends Controller
         echo "Test Socket";
     }
 
+    public function receive()
+    {
+        return view('tes.receive');
+    }
+
     private function _sendToSocket($event, $data = [])
     {
         $client = $this->client;
