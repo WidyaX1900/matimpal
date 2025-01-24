@@ -21,6 +21,18 @@ io.on("connection", (socket) => {
     socket.on("get-info", (data) => {
         socket.broadcast.emit("get-info", data);        
     });
+    socket.on("start-call", (data) => {
+        socket.broadcast.emit("receive-call", data);                
+    });
+    socket.on("close-call", (data) => {
+        socket.broadcast.emit("close-call", data);                
+    });
+    socket.on("reject-call", (data) => {
+        socket.broadcast.emit("reject-call", data);                
+    });
+    socket.on("accept-vicall", (data) => {
+        socket.broadcast.emit("accept-vicall", data);        
+    });
     socket.on("disconnect", () => {
         clearTimeout(disconnectTimeout);
         disconnectTimeout = setTimeout(() => {}, 5000)
