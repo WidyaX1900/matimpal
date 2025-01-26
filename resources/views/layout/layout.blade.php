@@ -26,7 +26,7 @@
         integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous">
     </script>
     <script src="https://cdn.socket.io/4.8.1/socket.io.min.js"></script>
-    @vite(['resources/js/app.js', 'resources/js/script.js'])
+    @vite(['resources/js/app.js', 'resources/js/script.js', 'resources/js/videocall_room.js'])
 </body>
 
 </html>

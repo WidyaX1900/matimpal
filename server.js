@@ -11,6 +11,7 @@ const io = new Server(server, {
 });
 const port = 3000;
 let disconnectTimeout;
+let videocall = {};
 
 app.get("/", (req, res) => {
     res.send("<p>NodeJS running...</p>")
@@ -32,6 +33,14 @@ io.on("connection", (socket) => {
     });
     socket.on("accept-vicall", (data) => {
         socket.broadcast.emit("accept-vicall", data);        
+    });
+    socket.on("join-videocall", (data) => {
+        const username = data.username;
+        const userId = data.userId;
+        const room = data.room;
+        socket.join(room);
+        socket.to(room).emit("new-videocall", { username, userId, room });        
+                
     });
     socket.on("disconnect", () => {
         clearTimeout(disconnectTimeout);

@@ -38,13 +38,11 @@ class VideoCallController extends Controller
     
     public function acceptCall(Request $request)
     {
-        $main = User::where('name', $request->main)->first();
-        $secondary = User::where('name', $request->secondary)->first();
-        $vicall = VideoCall::where('main_user', $main->username)
-                ->where('secondary_user', $secondary->username)
-                ->orderBy('id', 'desc')
-                ->first();
-
+        $user = Auth::user()->username;
+        $vicall = VideoCall::where('main_user', $user)
+        ->where('status', 'calling')
+            ->orderBy('id', 'desc')
+            ->first();
         $accept = VideoCall::where('room', $vicall->room)
                 ->update(['status' => 'oncall']);
 
@@ -64,6 +62,7 @@ class VideoCallController extends Controller
                 ->where('status', 'oncall')
                 ->orderBy('id', 'desc')
                 ->first();
+        return view('videocall.room', ['vicall' => $vicall]);
     }
 
     private function _sendToSocket($event, $data = [])

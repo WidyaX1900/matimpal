@@ -307,6 +307,45 @@ footer .category.active {
     opacity: .5;
 }
 
+.vicall-room {
+    position: fixed;
+    width: 100%;
+    height: 100vh;
+    background: black url('../img/bg.jpg') no-repeat;
+    background-size: cover;
+    top: 0;
+    left: 0;
+}
+
+.vicall-room .local-user {
+    position: absolute;
+    width: 145px;
+    height: 236px;
+    bottom: 85px;
+    right: 20px;
+    z-index: 1;
+}
+
+.vicall-room .remote-user {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: black;
+    top: 0;
+    left: 0;
+}
+
+.vicall-room .local-user video, 
+.vicall-room .remote-user video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.vicall-room .local-user video {
+    border-radius: 3px;
+}
+
 @keyframes faded {
     from {
         opacity: 0;
