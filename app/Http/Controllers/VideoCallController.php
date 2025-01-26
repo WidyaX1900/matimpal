@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\VideoCall;
 use ElephantIO\Client;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class VideoCallController extends Controller
 {
@@ -21,7 +23,12 @@ class VideoCallController extends Controller
 
     public function startCall(Request $request)
     {
-        
+        $caller = User::where('name', $request->caller)->first();
+        $receiver = User::where('name', $request->receiver)->first();
+        $room = uniqid();
+        $vicall = $this->_startCall($caller, $receiver, $room);
+
+        if($vicall) echo json_encode('success');
     }
 
     public function closeCall(Request $request)
@@ -31,12 +38,32 @@ class VideoCallController extends Controller
     
     public function acceptCall(Request $request)
     {
-        
-    }
+        $main = User::where('name', $request->main)->first();
+        $secondary = User::where('name', $request->secondary)->first();
+        $vicall = VideoCall::where('main_user', $main->username)
+                ->where('secondary_user', $secondary->username)
+                ->orderBy('id', 'desc')
+                ->first();
+
+        $accept = VideoCall::where('room', $vicall->room)
+                ->update(['status' => 'oncall']);
+
+        if($accept) echo json_encode('success');
+    }           
+
     
     public function rejectCall(Request $request)
     {
         
+    }
+    
+    public function onCall(Request $request)
+    {   
+        $user = Auth::user()->username;
+        $vicall = VideoCall::where('main_user', $user)
+                ->where('status', 'oncall')
+                ->orderBy('id', 'desc')
+                ->first();
     }
 
     private function _sendToSocket($event, $data = [])
@@ -47,5 +74,40 @@ class VideoCallController extends Controller
 
         $client->emit($event, $data);
         $client->disconnect();
+    }
+
+    private function _startCall($caller, $receiver, $room)
+    {
+        $main = VideoCall::create([
+            'main_user' => $caller->username,
+            'main_role' => 'caller',
+            'secondary_user' => $receiver->username,
+            'secondary_role' => 'receiver',
+            'room' => $room,
+            'status' => 'calling',
+            'peer_id' => '',
+            'camera' => 'true',
+            'audio' => 'true',
+            'direction' => 'outgoing',
+            'date_start' => time(),
+            'date_end' => 0,
+        ]);
+
+        $secondary = VideoCall::create([
+            'main_user' => $receiver->username,
+            'main_role' => 'receiver',
+            'secondary_user' => $caller->username,
+            'secondary_role' => 'caller',
+            'room' => $room,
+            'status' => 'calling',
+            'peer_id' => '',
+            'camera' => 'true',
+            'audio' => 'true',
+            'direction' => 'incoming',
+            'date_start' => time(),
+            'date_end' => 0,
+        ]);
+
+        return $main && $secondary;
     }
 }

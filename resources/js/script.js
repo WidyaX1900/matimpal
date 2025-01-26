@@ -21,7 +21,19 @@ $(document).ready(function() {
         socket.emit("start-call", { caller, receiver: receiver});
         ringtone.loop = true;
         ringtone.play();
-        loadVideo(receiver);                                 
+        loadVideo(receiver);
+        $.ajax({
+            headers: {
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+            },
+            url: "/videocall/startcall",
+            method: "post",
+            dataType: "json",
+            data: { caller, receiver: receiver },
+            success: function(response) {
+                console.log(response);                
+            }
+        });                                 
     });
 
     $(".videocall-container").on("click",".vicall-navigator .close-vicall-btn", function(){
@@ -40,6 +52,21 @@ $(document).ready(function() {
             `<small class="redirect-text">Direct to videocall...</small>`
         );
         socket.emit("accept-vicall", { caller });
+        const receiver = $("nav").data("user");
+        $.ajax({
+            headers: {
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+            },
+            url: "/videocall/acceptcall",
+            method: "post",
+            dataType: "json",
+            data: { secondary: caller, main: receiver },
+            success: function (response) {
+                if(response == "success") {
+                    window.location.href = "/videocall/oncall";
+                }
+            },
+        });
     });
 
     $(".videocall-container").on("click",".vicall-navigator .reject-vicall-btn", function () {
@@ -139,5 +166,6 @@ socket.on("accept-vicall", (data) => {
         $(".videocall-container .vicall-navigator").html(
             `<small class="redirect-text">Please Wait...</small>`
         );
+        window.location.href = "/videocall/oncall";
     }
 });
