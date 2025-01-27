@@ -31,9 +31,17 @@ class VideoCallController extends Controller
         if($vicall) echo json_encode('success');
     }
 
-    public function closeCall(Request $request)
+    public function missCall(Request $request)
     {
-        
+        $user = Auth::user()->username;
+        $vicall = VideoCall::where('main_user', $user)
+            ->where('status', 'calling')
+            ->orderBy('id', 'desc')
+            ->first();
+        $missed = VideoCall::where('room', $vicall->room)
+            ->update(['status' => 'missed call']);
+
+        if ($missed) echo json_encode('success');
     }
     
     public function acceptCall(Request $request)

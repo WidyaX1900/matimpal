@@ -5,6 +5,7 @@ let receiveTone = $("#ringtone")[0];
 let receiver;
 const caller = $("nav").data("user");
 const socket = io.connect("http://127.0.0.1:3000/");
+let missedCallTimeout;
 
 $(document).ready(function() {
     $(".friend-list li .vicall-icon").on("click", function(){
@@ -30,10 +31,32 @@ $(document).ready(function() {
             method: "post",
             dataType: "json",
             data: { caller, receiver: receiver }
-        });                                 
+        });
+        clearTimeout(missedCallTimeout);
+        missedCallTimeout = setTimeout(() => {
+            socket.emit("close-call", { caller, receiver: receiver });
+            closeCamera();
+            video.srcObject = null;
+            video.remove();
+            ringtone.pause();
+            ringtone.currentTime = 0;
+            $(".videocall-container").addClass("d-none");
+            $.ajax({
+                headers: {
+                    "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr(
+                        "content"
+                    ),
+                },
+                url: "/videocall/misscall",
+                method: "post",
+                dataType: "json",
+                data: { secondary: caller, main: receiver }
+            });
+        }, 22000)                                 
     });
 
     $(".videocall-container").on("click",".vicall-navigator .close-vicall-btn", function(){
+        clearTimeout(missedCallTimeout);
         socket.emit("close-call", { caller, receiver: receiver });
         closeCamera();
         video.srcObject = null;
@@ -41,6 +64,15 @@ $(document).ready(function() {
         ringtone.pause();
         ringtone.currentTime = 0;
         $(".videocall-container").addClass("d-none");
+        $.ajax({
+            headers: {
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+            },
+            url: "/videocall/misscall",
+            method: "post",
+            dataType: "json",
+            data: { secondary: caller, main: receiver }
+        });
     });
     
     $(".videocall-container").on("click",".vicall-navigator .accept-vicall-btn", function(){
@@ -67,6 +99,7 @@ $(document).ready(function() {
     });
 
     $(".videocall-container").on("click",".vicall-navigator .reject-vicall-btn", function () {
+            clearTimeout(missedCallTimeout);
             const caller = $(this).data("caller");
             socket.emit("reject-call", { caller });
             closeCamera();
@@ -141,6 +174,7 @@ socket.on("receive-call", (data) => {
 });
 
 socket.on("close-call", (data) => {
+    clearTimeout(missedCallTimeout);
     const user = $("nav").data("user");
     if (data.receiver === user) {
         closeCamera();
@@ -152,7 +186,8 @@ socket.on("close-call", (data) => {
     }
 });
 
-socket.on("reject-call", (data) => {    
+socket.on("reject-call", (data) => {
+    clearTimeout(missedCallTimeout);    
     const user = $("nav").data("user");
     if (data.caller === user) {
         closeCamera();
