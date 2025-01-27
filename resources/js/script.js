@@ -29,10 +29,7 @@ $(document).ready(function() {
             url: "/videocall/startcall",
             method: "post",
             dataType: "json",
-            data: { caller, receiver: receiver },
-            success: function(response) {
-                console.log(response);                
-            }
+            data: { caller, receiver: receiver }
         });                                 
     });
 
