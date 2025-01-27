@@ -128,6 +128,7 @@ class VideoCallController extends Controller
             'camera' => 'true',
             'audio' => 'true',
             'direction' => 'outgoing',
+            'count' => 0,
             'date_start' => time(),
             'date_end' => 0,
         ]);
@@ -143,6 +144,7 @@ class VideoCallController extends Controller
             'camera' => 'true',
             'audio' => 'true',
             'direction' => 'incoming',
+            'count' => 0,
             'date_start' => time(),
             'date_end' => 0,
         ]);

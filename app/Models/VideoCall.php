@@ -20,6 +20,7 @@ class VideoCall extends Model
         'camera',
         'audio',
         'direction',
+        'count',
         'date_start',
         'date_end',
     ];
