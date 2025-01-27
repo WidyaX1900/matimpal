@@ -74,6 +74,20 @@ class VideoCallController extends Controller
         
         if($updatePeer) echo json_encode('success');
     }
+    
+    public function endCall(Request $request)
+    {
+        $room = $request->room;
+        $endCall = VideoCall::where('room', $room)
+                -> update([
+                    'status' => 'ended',
+                    'peer_id' => '',
+                    'date_end' => time()
+                ]);
+        
+        $this->_sendToSocket('end-videocall', ['room' => $room]);
+        if($endCall) echo json_encode('success');
+    }
 
     private function _sendToSocket($event, $data = [])
     {

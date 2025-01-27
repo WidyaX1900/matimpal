@@ -15,5 +15,10 @@
             </div>
             <video playsinline></video>
         </div>
+        <div class="vicall-navigator">
+            <button type="button" class="btn btn-danger rounded-circle close-vicall-btn">
+                <i class="fa-solid fa-video-slash"></i>
+            </button>
+        </div>
     </section>
 @endsection

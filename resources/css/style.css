@@ -361,6 +361,27 @@ footer .category.active {
     border-radius: 3px;
 }
 
+.vicall-room .vicall-navigator {
+    display: flex;
+    width: 100%;
+    background: rgb(34, 34, 34);
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    justify-content: center;
+    padding: 10px;
+}
+
+.vicall-room .vicall-navigator .btn {
+    width: fit-content;
+    height: fit-content;
+    padding: 12px;
+}
+
+.vicall-room .vicall-navigator .btn i {
+    font-size: 1.3rem;
+}
+
 @keyframes faded {
     from {
         opacity: 0;

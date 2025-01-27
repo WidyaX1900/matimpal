@@ -29,6 +29,14 @@ if (document.getElementById("vicall-room")) {
         });
     });
 
+    $(".vicall-room").on(
+        "click",
+        ".vicall-navigator .close-vicall-btn",
+        function () {
+            endCall(room);
+        }
+    );
+
     // Functions
     async function getStream(mode) {
         let camStream = navigator.mediaDevices.getUserMedia({
@@ -54,6 +62,18 @@ if (document.getElementById("vicall-room")) {
             data: { peer_id: peerId, room }
         });
     }
+    
+    function endCall(room) {
+        $.ajax({
+            headers: {
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+            },
+            url: "/videocall/endcall",
+            method: "post",
+            dataType: "json",
+            data: { room }
+        });
+    }
     // End Functions
 
     // Sockets
@@ -66,6 +86,11 @@ if (document.getElementById("vicall-room")) {
                 );
                 openCamera(remoteVideo, remoteStream);
             });
+        }, 1500);
+    });
+    socket.on("end-videocall", (data) => {
+        setTimeout(() => {
+            window.location.href = "/";            
         }, 1000);
     });
     // End Sockets

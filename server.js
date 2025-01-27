@@ -39,9 +39,14 @@ io.on("connection", (socket) => {
         const userId = data.userId;
         const room = data.room;
         socket.join(room);
-        socket.to(room).emit("new-videocall", { username, userId, room });        
-                
+        socket.to(room).emit("new-videocall", { username, userId, room });                
     });
+
+    socket.on("end-videocall", (data) => {
+        const room = data.room;
+        socket.to(room).emit("end-videocall", { message: "video call ended" });
+    });
+
     socket.on("disconnect", () => {
         clearTimeout(disconnectTimeout);
         disconnectTimeout = setTimeout(() => {}, 5000)
