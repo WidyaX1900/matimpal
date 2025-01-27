@@ -104,6 +104,29 @@ class VideoCallController extends Controller
         $this->_sendToSocket('end-videocall', ['room' => $room]);
         if($endCall) echo json_encode('success');
     }
+    
+    public function redialCall(Request $request)
+    {
+        $main_user = Auth::user()->username;
+        $secondary_user = User::where('name', $request->receiver)->first();
+        $vicall = VideoCall::where('main_user', $main_user)
+                ->where('secondary_user', $secondary_user->username)
+                ->orderBy('id', 'desc')
+                ->first();
+        if($vicall) {
+            $newCount = $vicall->count + 1;
+            $updateCount = VideoCall::where('room', $vicall->room)
+                        ->where(function ($query) {
+                            $query->where('status', 'missed call')
+                                ->orWhere('status', 'rejected');
+                        })->update([
+                            'count' => $newCount,
+                            'status' => 'calling'
+                        ]);
+            
+            if($updateCount) echo json_encode('success');
+        }
+    }
 
     private function _sendToSocket($event, $data = [])
     {

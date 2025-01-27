@@ -38,6 +38,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/videocall/rejectcall', [VideoCallController::class, 'rejectCall'])->name('videocall.rejectcall');
     
     Route::post('/videocall/misscall', [VideoCallController::class, 'missCall'])->name('videocall.misscall');
+    
+    Route::post('/videocall/redialcall', [VideoCallController::class, 'redialCall'])->name('videocall.redialcall');
 });
 
 require __DIR__.'/auth.php';

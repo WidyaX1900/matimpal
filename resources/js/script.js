@@ -31,7 +31,10 @@ $(document).ready(function() {
             url: "/videocall/startcall",
             method: "post",
             dataType: "json",
-            data: { caller, receiver: receiver }
+            data: { caller, receiver: receiver },
+            error: function (error) {
+                console.log(error);
+            },
         });
         clearTimeout(missedCallTimeout);
         missedCallTimeout = setTimeout(() => {
@@ -161,6 +164,23 @@ $(document).ready(function() {
             socket.emit("start-call", { caller, receiver: receiver });
             ringtone.loop = true;
             ringtone.play();
+            $.ajax({
+                headers: {
+                    "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr(
+                        "content"
+                    ),
+                },
+                url: "/videocall/redialcall",
+                method: "post",
+                dataType: "json",
+                data: { receiver },
+                success: function(response) {
+                    console.log(response);                    
+                },
+                error: function(error) {
+                    console.log(error);                    
+                }
+            });
             clearTimeout(missedCallTimeout);
             missedCallTimeout = setTimeout(() => {
                 socket.emit("close-call", { caller, receiver: receiver });
@@ -180,6 +200,17 @@ $(document).ready(function() {
                 $(".videocall-container .vicall-navigator")
                     .removeClass("vicall-navigator--center")
                     .addClass("vicall-navigator--between");
+                $.ajax({
+                    headers: {
+                        "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr(
+                            "content"
+                        ),
+                    },
+                    url: "/videocall/misscall",
+                    method: "post",
+                    dataType: "json",
+                    data: { secondary: caller, main: receiver },
+                });
             }, 22000);
         }
     );
