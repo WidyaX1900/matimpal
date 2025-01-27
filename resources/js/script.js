@@ -9,6 +9,7 @@ let missedCallTimeout;
 
 $(document).ready(function() {
     $(".friend-list li .vicall-icon").on("click", function(){
+        $(".videocall-container .friend-info small").html("");
         $(".videocall-container .vicall-navigator")
             .removeClass("vicall-navigator--between")
             .addClass("vicall-navigator--center");
@@ -35,12 +36,22 @@ $(document).ready(function() {
         clearTimeout(missedCallTimeout);
         missedCallTimeout = setTimeout(() => {
             socket.emit("close-call", { caller, receiver: receiver });
-            closeCamera();
-            video.srcObject = null;
-            video.remove();
             ringtone.pause();
             ringtone.currentTime = 0;
-            $(".videocall-container").addClass("d-none");
+            $(".videocall-container .friend-info small").html(
+                "missed call"
+            );
+            $(".videocall-container .vicall-navigator").html(`
+                <button type="button" class="btn btn-success rounded-circle redial-vicall-btn" data-receiver="${receiver}">
+                    <i class="fa-solid fa-video"></i>
+                </button>
+                <button type="button" class="btn btn-light rounded-circle cancel-vicall-btn">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            `);
+            $(".videocall-container .vicall-navigator")
+                .removeClass("vicall-navigator--center")
+                .addClass("vicall-navigator--between");
             $.ajax({
                 headers: {
                     "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr(
@@ -121,7 +132,59 @@ $(document).ready(function() {
             });
         }
     );
+
+    $(".videocall-container").on("click",".vicall-navigator .cancel-vicall-btn",
+    function () {
+            clearTimeout(missedCallTimeout);
+            closeCamera();
+            video.srcObject = null;
+            video.remove();
+            ringtone.pause();
+            ringtone.currentTime = 0;
+            $(".videocall-container").addClass("d-none");
+        }
+    );
+    
+    $(".videocall-container").on("click",".vicall-navigator .redial-vicall-btn",
+    function () {
+            $(".videocall-container .friend-info small").html("");
+            $(".videocall-container .vicall-navigator")
+                .removeClass("vicall-navigator--between")
+                .addClass("vicall-navigator--center");
+
+            receiver = $(this).data("receiver");
+            $(".videocall-container .vicall-navigator").html(`
+            <button type="button" class="btn btn-danger rounded-circle close-vicall-btn">
+                <i class="fa-solid fa-video-slash"></i>
+            </button>
+        `);
+            socket.emit("start-call", { caller, receiver: receiver });
+            ringtone.loop = true;
+            ringtone.play();
+            clearTimeout(missedCallTimeout);
+            missedCallTimeout = setTimeout(() => {
+                socket.emit("close-call", { caller, receiver: receiver });
+                ringtone.pause();
+                ringtone.currentTime = 0;
+                $(".videocall-container .friend-info small").html(
+                    "missed call"
+                );
+                $(".videocall-container .vicall-navigator").html(`
+                <button type="button" class="btn btn-success rounded-circle redial-vicall-btn" data-receiver="${receiver}">
+                    <i class="fa-solid fa-video"></i>
+                </button>
+                <button type="button" class="btn btn-light rounded-circle cancel-vicall-btn">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            `);
+                $(".videocall-container .vicall-navigator")
+                    .removeClass("vicall-navigator--center")
+                    .addClass("vicall-navigator--between");
+            }, 22000);
+        }
+    );
 });
+
 
 function loadVideo(receiver) {
     video = document.createElement("video");
@@ -155,6 +218,7 @@ function closeCamera() {
 socket.on("receive-call", (data) => {
     const user = $("nav").data("user");
     if (data.receiver === user) {
+        $(".videocall-container .friend-info small").html("");
         $(".videocall-container .vicall-navigator").html(`
             <button type="button" class="btn btn-success rounded-circle accept-vicall-btn" data-caller="${data.caller}">
                 <i class="fa-solid fa-video"></i>

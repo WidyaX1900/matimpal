@@ -295,8 +295,18 @@ footer .category.active {
     padding: 20px;
 }
 
+.videocall-container .vicall-navigator .btn.cancel-vicall-btn {
+    width: 65px;
+    height: 65px;
+    padding: 20px;
+}
+
 .videocall-container .vicall-navigator .btn i {
     font-size: 1.5rem;
+}
+
+.videocall-container .vicall-navigator .btn.cancel-vicall-btn i {
+    font-size: 1.6rem;
 }
 
 .videocall-container .vicall-navigator .redirect-text {
