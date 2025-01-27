@@ -75,6 +75,17 @@ $(document).ready(function() {
             receiveTone.pause();
             receiveTone.currentTime = 0;
             $(".videocall-container").addClass("d-none");
+            $.ajax({
+                headers: {
+                    "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr(
+                        "content"
+                    ),
+                },
+                url: "/videocall/rejectcall",
+                method: "post",
+                dataType: "json",
+                data: { secondary: caller, main: receiver }
+            });
         }
     );
 });

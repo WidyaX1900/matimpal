@@ -52,7 +52,15 @@ class VideoCallController extends Controller
     
     public function rejectCall(Request $request)
     {
-        
+        $user = Auth::user()->username;
+        $vicall = VideoCall::where('main_user', $user)
+            ->where('status', 'calling')
+            ->orderBy('id', 'desc')
+            ->first();
+        $reject = VideoCall::where('room', $vicall->room)
+            ->update(['status' => 'rejected']);
+
+        if ($reject) echo json_encode('success');
     }
     
     public function onCall(Request $request)
