@@ -64,6 +64,16 @@ class VideoCallController extends Controller
                 ->first();
         return view('videocall.room', ['vicall' => $vicall]);
     }
+    
+    public function updatePeerId(Request $request)
+    {
+        $user = Auth::user()->username;
+        $updatePeer = VideoCall::where('main_user', $user)
+                -> where('room', $request->room)
+                ->update(['peer_id' => $request->peer_id]);
+        
+        if($updatePeer) echo json_encode('success');
+    }
 
     private function _sendToSocket($event, $data = [])
     {

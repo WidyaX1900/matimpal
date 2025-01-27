@@ -30,6 +30,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/videocall/rejectcall', [VideoCallController::class, 'rejectCall'])->name('videocall.rejectcall');
     
     Route::get('/videocall/oncall', [VideoCallController::class, 'onCall'])->name('videocall.oncall');
+
+    Route::post('/videocall/updatepeer', [VideoCallController::class, 'updatePeerId'])->name('videocall.updatepeer');
 });
 
 require __DIR__.'/auth.php';

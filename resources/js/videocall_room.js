@@ -8,14 +8,15 @@ if (document.getElementById("vicall-room")) {
     const peer = new Peer({
         host: "127.0.0.1",
         port: 3001,
-        path: "/"
+        path: "/",
     });
     let localStream;
 
     peer.on("open", async (peerId) => {
+        updatePeer(peerId, room);
         socket.emit("join-videocall", { username: user, userId: peerId, room });
         localStream = await getStream("user");
-        openCamera(localVideo, localStream);        
+        openCamera(localVideo, localStream);
     });
 
     peer.on("call", (call) => {
@@ -24,10 +25,11 @@ if (document.getElementById("vicall-room")) {
             const remoteVideo = document.querySelector(
                 ".vicall-room .remote-user video"
             );
-            openCamera(remoteVideo, remoteStream);            
+            openCamera(remoteVideo, remoteStream);
         });
     });
 
+    // Functions
     async function getStream(mode) {
         let camStream = navigator.mediaDevices.getUserMedia({
             video: mode,
@@ -41,6 +43,19 @@ if (document.getElementById("vicall-room")) {
         video.onloadedmetadata = () => video.play();
     }
 
+    function updatePeer(peerId, room) {
+        $.ajax({
+            headers: {
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+            },
+            url: "/videocall/updatepeer",
+            method: "post",
+            dataType: "json",
+            data: { peer_id: peerId, room }
+        });
+    }
+    // End Functions
+
     // Sockets
     socket.on("new-videocall", (data) => {
         setTimeout(() => {
@@ -51,7 +66,7 @@ if (document.getElementById("vicall-room")) {
                 );
                 openCamera(remoteVideo, remoteStream);
             });
-        }, 1000); 
+        }, 1000);
     });
     // End Sockets
 }
