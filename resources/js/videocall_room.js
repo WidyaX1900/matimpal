@@ -39,7 +39,7 @@ if (document.getElementById("vicall-room")) {
 
     // Functions
     async function getStream(mode) {
-        let camStream = navigator.mediaDevices.getUserMedia({
+        let camStream = await navigator.mediaDevices.getUserMedia({
             video: mode,
             audio: true,
         });
@@ -86,7 +86,7 @@ if (document.getElementById("vicall-room")) {
                 );
                 openCamera(remoteVideo, remoteStream);
             });
-        }, 1500);
+        }, 1500);        
     });
     socket.on("end-videocall", (data) => {
         setTimeout(() => {
