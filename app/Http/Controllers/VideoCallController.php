@@ -127,6 +127,25 @@ class VideoCallController extends Controller
             if($updateCount) echo json_encode('success');
         }
     }
+    
+    public function toggleMedia(Request $request)
+    {
+        $main_user = Auth::user()->username;
+        $media = $request->media;
+        $toggle = $request->toggle;
+        
+        if($media === 'audio') {
+            $update = ['audio' => $toggle];
+        } else {
+            $update = ['camera' => $toggle];
+        }
+
+        $changeMedia = VideoCall::where('main_user', $main_user)
+                ->where('room', $request->room)
+                ->update($update);
+        
+        echo json_encode('success');
+    }
 
     private function _sendToSocket($event, $data = [])
     {

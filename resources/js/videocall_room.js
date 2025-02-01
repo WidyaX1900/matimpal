@@ -1,4 +1,5 @@
 import { Peer } from "https://esm.sh/peerjs@1.5.4?bundle-deps";
+// localStream.getVideoTracks()[0];
 
 if (document.getElementById("vicall-room")) {
     const localVideo = document.querySelector(".vicall-room .local-user video");
@@ -17,6 +18,12 @@ if (document.getElementById("vicall-room")) {
         socket.emit("join-videocall", { username: user, userId: peerId, room });
         localStream = await getStream("user");
         openCamera(localVideo, localStream);
+
+        if(localVideo.dataset.audio === "true") {
+            localStream.getAudioTracks()[0].enabled = true;
+        } else if(localVideo.dataset.audio === "false") {
+            localStream.getAudioTracks()[0].enabled = false;
+        }
     });
 
     peer.on("call", (call) => {
@@ -34,6 +41,30 @@ if (document.getElementById("vicall-room")) {
         ".vicall-navigator .close-vicall-btn",
         function () {
             endCall(room);
+        }
+    );
+    
+    $(".vicall-room").on("click", ".vicall-navigator .audio-btn",
+        function () {
+            const $icon = $(
+                ".vicall-room .vicall-navigator .audio-btn i"
+            );            
+            
+            if (localVideo.dataset.audio === "true") {
+                localVideo.dataset.audio = "false";
+                localStream.getAudioTracks()[0].enabled = false;
+                $icon
+                    .removeClass("fa-microphone text-light")
+                    .addClass("fa-microphone-slash text-danger");
+                updateMedia("audio", "false");
+            } else if (localVideo.dataset.audio === "false") {
+                localVideo.dataset.audio = "true";
+                localStream.getAudioTracks()[0].enabled = true;
+                $icon
+                    .removeClass("fa-microphone-slash text-danger")
+                    .addClass("fa-microphone text-light");
+                updateMedia("audio", "true");
+            }                                    
         }
     );
 
@@ -72,6 +103,18 @@ if (document.getElementById("vicall-room")) {
             method: "post",
             dataType: "json",
             data: { room }
+        });
+    }
+
+    function updateMedia(media, toggle) {
+        $.ajax({
+            headers: {
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+            },
+            url: "/videocall/togglemedia",
+            method: "post",
+            dataType: "json",
+            data: { room, media, toggle }
         });
     }
     // End Functions

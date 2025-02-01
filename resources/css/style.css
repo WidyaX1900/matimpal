@@ -393,6 +393,12 @@ footer .category.active {
     font-size: 1.3rem;
 }
 
+.vicall-room .vicall-navigator .btn.audio-btn {
+    width: 30px;
+    height: fit-content;
+    padding: 12px;
+}
+
 @keyframes faded {
     from {
         opacity: 0;

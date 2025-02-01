@@ -2,7 +2,7 @@
 @section('content')
     <section id="vicall-room" class="vicall-room" data-room="{{ $vicall->room }}">
         <div class="local-user" data-local="{{ $vicall->main_user }}">
-            <video muted playsinline></video>
+            <video muted playsinline data-audio="{{ $vicall->audio }}"></video>
         </div>
         <div class="remote-user">
             <div class="user-info">
@@ -16,10 +16,16 @@
             <video playsinline></video>
         </div>
         <div class="vicall-navigator">
-            <button type="button" class="btn rounded-circle audio-btn">
-                <i class="fa-solid fa-microphone text-light"></i>
-            </button>
-            <button type="button" class="btn rounded-circle audio-btn">
+            @if ($vicall->audio === 'true')
+                <button type="button" class="btn rounded-circle audio-btn">
+                    <i class="fa-solid fa-microphone text-light"></i>
+                </button>    
+            @else
+                <button type="button" class="btn rounded-circle audio-btn">
+                    <i class="fa-solid fa-microphone-slash text-danger"></i>
+                </button>                
+            @endif
+            <button type="button" class="btn rounded-circle camera-btn">
                 <i class="fa-solid fa-camera text-light"></i>
             </button>
             <button type="button" class="btn btn-danger rounded-circle close-vicall-btn">
