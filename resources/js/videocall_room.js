@@ -24,6 +24,12 @@ if (document.getElementById("vicall-room")) {
         } else if(localVideo.dataset.audio === "false") {
             localStream.getAudioTracks()[0].enabled = false;
         }
+
+        if (localVideo.dataset.camera === "true") {
+            localStream.getVideoTracks()[0].enabled = true;
+        } else if (localVideo.dataset.camera === "false") {
+            localStream.getVideoTracks()[0].enabled = false;
+        }
     });
 
     peer.on("call", (call) => {
@@ -64,6 +70,30 @@ if (document.getElementById("vicall-room")) {
                     .removeClass("fa-microphone-slash text-danger")
                     .addClass("fa-microphone text-light");
                 updateMedia("audio", "true");
+            }                                    
+        }
+    );
+    
+    $(".vicall-room").on("click", ".vicall-navigator .camera-btn",
+        function () {
+            const $icon = $(
+                ".vicall-room .vicall-navigator .camera-btn i"
+            );            
+            
+            if (localVideo.dataset.camera === "true") {
+                localVideo.dataset.camera = "false";
+                localStream.getVideoTracks()[0].enabled = false;
+                $icon
+                    .removeClass("text-light")
+                    .addClass("text-danger");
+                updateMedia("camera", "false");
+            } else if (localVideo.dataset.camera === "false") {
+                localVideo.dataset.camera = "true";
+                localStream.getVideoTracks()[0].enabled = true;
+                $icon
+                    .removeClass("text-danger")
+                    .addClass("text-light");
+                updateMedia("camera", "true");
             }                                    
         }
     );
