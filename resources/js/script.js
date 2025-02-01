@@ -115,7 +115,8 @@ $(document).ready(function() {
     $(".videocall-container").on("click",".vicall-navigator .reject-vicall-btn", function () {
             clearTimeout(missedCallTimeout);
             const caller = $(this).data("caller");
-            socket.emit("reject-call", { caller });
+            const receiver = $("nav").data("user");
+            socket.emit("reject-call", { caller, receiver: receiver});
             closeCamera();
             video.srcObject = null;
             video.remove();
@@ -282,15 +283,25 @@ socket.on("close-call", (data) => {
 });
 
 socket.on("reject-call", (data) => {
-    clearTimeout(missedCallTimeout);    
+    clearTimeout(missedCallTimeout);        
     const user = $("nav").data("user");
     if (data.caller === user) {
-        closeCamera();
-        video.srcObject = null;
-        video.remove();
         ringtone.pause();
         ringtone.currentTime = 0;
-        $(".videocall-container").addClass("d-none");
+        $(".videocall-container .friend-info small").html(
+            "rejected the video call"
+        );
+        $(".videocall-container .vicall-navigator").html(`
+                <button type="button" class="btn btn-success rounded-circle redial-vicall-btn" data-receiver="${data.receiver}">
+                    <i class="fa-solid fa-video"></i>
+                </button>
+                <button type="button" class="btn btn-light rounded-circle cancel-vicall-btn">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            `);
+        $(".videocall-container .vicall-navigator")
+            .removeClass("vicall-navigator--center")
+            .addClass("vicall-navigator--between");
     }
 });
 
