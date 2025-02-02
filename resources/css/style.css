@@ -229,6 +229,46 @@ footer .category.active {
 /* ============================================================= */
 /* VIDEO CALL                                                    */
 /* ============================================================= */
+.videocall-content ul {
+    list-style: none;
+    width: 100%;
+    height: 80vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.videocall-content ul li a {
+    width: 100%;
+    background: white;
+    display: flex;
+    padding: 1rem 0.7rem;
+    background: white;
+    border-radius: 4px;
+    text-decoration: none;
+    color: black;
+}
+
+.videocall-content ul li a i {
+    font-size: 2.2rem;
+    margin-right: 0.5rem;
+    color: var(--main-color);
+}
+
+.videocall-content ul li a .vicall-icon {
+    font-size: 1.5rem;
+}
+
+.videocall-content ul li .vicall-info {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.videocall-content ul li .vicall-info .friend-info {
+    display: flex;
+    flex-direction: column;
+}
+
 .videocall-container {
     width: 100vw;
     height: 100vh;

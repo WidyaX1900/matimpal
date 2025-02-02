@@ -21,6 +21,8 @@ Route::middleware('auth')->group(function () {
     
     Route::get('/server/receive', [ServerController::class, 'receive'])->name('server.receive');
     
+    Route::get('/videocall', [VideoCallController::class, 'index'])->name('videocall.index');
+
     Route::post('/videocall/startcall', [VideoCallController::class, 'startCall'])->name('videocall.startcall');
     
     Route::post('/videocall/closecall', [VideoCallController::class, 'closeCall'])->name('videocall.closecall');
