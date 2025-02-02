@@ -1,10 +1,10 @@
 @section('footer')
     <footer class="fixed-bottom">
-        <a href="/" class="category active text-decoration-none">
+        <a href="/" class="category text-decoration-none {{ request()->is('/') ? 'active' : '' }}">
             <i class="fa-solid fa-message"></i>
             <small>Chat</small>
         </a>
-        <a href="/videocall" class="category text-decoration-none">
+        <a href="/videocall" class="category text-decoration-none {{ request()->is('videocall') ? 'active' : '' }}">
             <i class="fa-solid fa-video"></i>
             <small>Video Call</small>
         </a>
