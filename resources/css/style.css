@@ -269,6 +269,16 @@ footer .category.active {
     flex-direction: column;
 }
 
+.videocall-content ul li .vicall-info .friend-info small {
+    display: flex;
+    align-items: center;
+    margin-top: .2rem;
+}
+
+.videocall-content ul li .vicall-info .friend-info small i {
+    font-size: 1rem;
+}
+
 .videocall-container {
     width: 100vw;
     height: 100vh;

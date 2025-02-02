@@ -9,20 +9,36 @@
 @section('content')
     <section class="videocall-content">
         <ul class="p-0 friend-list">
-            @for ($i = 1; $i <= 5; $i++)
+            @foreach ($videocalls as $list)
                 <li class="mb-3">
                     <a>
                         <i class="fa-solid fa-circle-user text-secondary"></i>
                         <div class="vicall-info">
                             <div class="friend-info">
-                                <strong>Friend Name</strong>
-                                <small>Status vicall</small>
+                                <strong>{{ $list->user->name }}</strong>
+                                <small class="text-secondary">
+                                    @if ($list->status === 'missed call' || $list->status === 'rejected')
+                                       <i class="fa-solid fa-video-slash text-danger"></i> 
+                                    @else
+                                       <i class="fa-solid fa-video text-success"></i> 
+                                    @endif
+
+                                    @if ($list->status === 'missed call' || $list->status === 'rejected')
+                                       {{ Str::ucfirst($list->status) }} 
+                                    @else
+                                        @if ($list->direction === 'outgoing')
+                                            Outgoing call
+                                        @else
+                                            Incoming call
+                                        @endif 
+                                    @endif
+                                </small>
                             </div>
                         </div>
-                        <i class="fa-solid fa-video vicall-icon"></i>
+                        <i class="fa-solid fa-video vicall-icon" data-receiver="{{ $list->user->name }}"></i>
                     </a>
                 </li>
-            @endfor
+            @endforeach
         </ul>    
     </section>
 @endsection

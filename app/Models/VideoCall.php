@@ -24,4 +24,9 @@ class VideoCall extends Model
         'date_start',
         'date_end',
     ];
+    
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'secondary_user', 'username');
+    }
 }

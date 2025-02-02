@@ -23,14 +23,13 @@ class VideoCallController extends Controller
 
     public function index()
     {
-        $logged_name = Auth::user()->username;
-        $videocalls = VideoCall::where('main_user', $logged_name)
-                ->where(function($query) {
-                    $query->where('status', '!=', 'calling')
-                        ->orWhere('status', '!=', 'oncall');
-                })
-                ->orderBy('date_end', 'desc')
-                ->get();
+        $main_user = Auth::user()->username;
+        $videocalls = VideoCall::with('user')
+                    ->where('main_user', $main_user)
+                    ->where(function($query) {
+                        $query->where('status', '!=', 'calling')
+                            ->orWhere('status', '!=', 'oncall');
+                    })->orderBy('date_end', 'desc')->get();
 
         return view('videocall.index', ['videocalls' => $videocalls]);
     }
