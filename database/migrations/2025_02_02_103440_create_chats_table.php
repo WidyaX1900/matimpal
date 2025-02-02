@@ -13,7 +13,15 @@ return new class extends Migration
     {
         Schema::create('chats', function (Blueprint $table) {
             $table->id();
+            $table->string('sender', 255);
+            $table->string('receiver', 255);
+            $table->text('message');
+            $table->integer('read');
+            $table->integer('date');
             $table->timestamps();
+
+            $table->foreign('sender')->references('username')->on('users')->cascadeOnDelete();
+            $table->foreign('receiver')->references('username')->on('users')->cascadeOnDelete();
         });
     }
 
