@@ -46,6 +46,11 @@ io.on("connection", (socket) => {
         const room = data.room;
         socket.to(room).emit("end-videocall", { message: "video call ended" });
     });
+    
+    socket.on("toggle-media", (data) => {
+        const room = data.room;
+        socket.broadcast.to(room).emit("toggle-camera", data);
+    });
 
     socket.on("disconnect", () => {
         clearTimeout(disconnectTimeout);

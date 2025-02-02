@@ -78,7 +78,12 @@ class VideoCallController extends Controller
                 ->where('status', 'oncall')
                 ->orderBy('id', 'desc')
                 ->first();
-        return view('videocall.room', ['vicall' => $vicall]);
+        
+        $friend = VideoCall::where('main_user', $vicall->secondary_user)
+                ->where('status', 'oncall')
+                ->where('room', $vicall->room)
+                ->first();
+        return view('videocall.room', ['vicall' => $vicall, 'friend' => $friend]);
     }
     
     public function updatePeerId(Request $request)
@@ -143,7 +148,6 @@ class VideoCallController extends Controller
         $changeMedia = VideoCall::where('main_user', $main_user)
                 ->where('room', $request->room)
                 ->update($update);
-        
         echo json_encode('success');
     }
 

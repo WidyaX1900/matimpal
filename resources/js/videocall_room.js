@@ -86,6 +86,12 @@ if (document.getElementById("vicall-room")) {
                 $icon
                     .removeClass("text-light")
                     .addClass("text-danger");
+                $("#vicall-room .local-user").append(`
+                    <div class="off-cam">
+                        <i class="fa-solid fa-camera text-danger"></i>
+                    </div>
+                `);
+                socket.emit("toggle-media", { room, toggle: "false", friend: user });
                 updateMedia("camera", "false");
             } else if (localVideo.dataset.camera === "false") {
                 localVideo.dataset.camera = "true";
@@ -93,6 +99,8 @@ if (document.getElementById("vicall-room")) {
                 $icon
                     .removeClass("text-danger")
                     .addClass("text-light");
+                $("#vicall-room .local-user .off-cam").remove();
+                socket.emit("toggle-media", { room, toggle: "true", friend: user });
                 updateMedia("camera", "true");
             }                                    
         }
@@ -165,6 +173,20 @@ if (document.getElementById("vicall-room")) {
         setTimeout(() => {
             window.location.href = "/";            
         }, 1000);
+    });
+    socket.on("toggle-camera", (data) => {
+        const friend = $(".vicall-room .remote-user").data("remote");
+        if(friend === data.friend) {
+            if(data.toggle === "false") {
+                $("#vicall-room .remote-user").append(`
+                    <div class="off-cam">
+                        <i class="fa-solid fa-camera text-danger"></i>
+                    </div>
+                `);
+            } else {
+                $("#vicall-room .remote-user .off-cam").remove();
+            }
+        }                        
     });
     // End Sockets
 }

@@ -3,8 +3,13 @@
     <section id="vicall-room" class="vicall-room" data-room="{{ $vicall->room }}">
         <div class="local-user" data-local="{{ $vicall->main_user }}">
             <video muted playsinline data-audio="{{ $vicall->audio }}" data-camera="{{ $vicall->camera }}"></video>
+            @if ($vicall->camera === 'false')
+                <div class="off-cam">
+                    <i class="fa-solid fa-camera text-danger"></i>
+                </div>                
+            @endif
         </div>
-        <div class="remote-user">
+        <div class="remote-user" data-remote="{{ $vicall->secondary_user }}">
             <div class="user-info">
                 <i class="fa-solid fa-circle-user text-secondary"></i>
                 <h4 class="text-light mb-3">{{ $vicall->secondary_user }}</h4>
@@ -14,6 +19,11 @@
                 </div>
             </div>
             <video playsinline></video>
+            @if ($friend->camera === 'false')
+                <div class="off-cam">
+                    <i class="fa-solid fa-camera text-danger"></i>
+                </div>                
+            @endif
         </div>
         <div class="vicall-navigator">
             @if ($vicall->audio === 'true')
