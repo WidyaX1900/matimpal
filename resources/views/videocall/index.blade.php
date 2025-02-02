@@ -9,19 +9,20 @@
 @section('content')
     <section class="videocall-content">
         <ul class="p-0 friend-list">
-            @foreach ($friends as $friend)
+            @for ($i = 1; $i <= 5; $i++)
                 <li class="mb-3">
                     <a>
                         <i class="fa-solid fa-circle-user text-secondary"></i>
                         <div class="vicall-info">
                             <div class="friend-info">
-                                <strong>{{ $friend->name }}</strong>
+                                <strong>Friend Name</strong>
+                                <small>Status vicall</small>
                             </div>
                         </div>
-                        <i class="fa-solid fa-video vicall-icon" data-receiver="{{ $friend->name }}"></i>
+                        <i class="fa-solid fa-video vicall-icon"></i>
                     </a>
                 </li>
-            @endforeach
+            @endfor
         </ul>    
     </section>
 @endsection
