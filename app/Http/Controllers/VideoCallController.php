@@ -49,7 +49,10 @@ class VideoCallController extends Controller
             ->orderBy('id', 'desc')
             ->first();
         $missed = VideoCall::where('room', $vicall->room)
-            ->update(['status' => 'missed call']);
+            ->update([
+                'status' => 'missed call',
+                'date_end' => time(),
+            ]);
 
         if ($missed) echo json_encode('success');
     }
@@ -76,7 +79,10 @@ class VideoCallController extends Controller
             ->orderBy('id', 'desc')
             ->first();
         $reject = VideoCall::where('room', $vicall->room)
-            ->update(['status' => 'rejected']);
+            ->update([
+                'status' => 'rejected',
+                'date_end' => time()
+            ]);
 
         if ($reject) echo json_encode('success');
     }
@@ -136,7 +142,8 @@ class VideoCallController extends Controller
                                 ->orWhere('status', 'rejected');
                         })->update([
                             'count' => $newCount,
-                            'status' => 'calling'
+                            'status' => 'calling',
+                            'date_end' => 0
                         ]);
             
             if($updateCount) echo json_encode('success');
