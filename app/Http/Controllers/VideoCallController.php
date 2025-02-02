@@ -171,6 +171,16 @@ class VideoCallController extends Controller
         echo json_encode('success');
     }
 
+    public function newCall()
+    {
+        $logged_name = Auth::user()->username;
+        $users = User::where('username', '!=', $logged_name)
+            ->orderBy('id', 'desc')
+            ->get();
+
+        return view('videocall.new', ['friends' => $users]);
+    }
+
     private function _sendToSocket($event, $data = [])
     {
         $client = $this->client;

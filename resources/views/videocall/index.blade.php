@@ -39,6 +39,10 @@
                     </a>
                 </li>
             @endforeach
-        </ul>    
+        </ul>
+        <a href="/videocall/newcall" class="new-vicall-btn">
+            <i class="fa-solid fa-video"></i>
+        </a>    
     </section>
 @endsection
+@extends('layout.footer')

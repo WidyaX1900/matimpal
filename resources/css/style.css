@@ -169,7 +169,8 @@ main {
     font-size: 3rem;
 }
 
-.chat-content .new-chat-btn {
+.chat-content .new-chat-btn, 
+.videocall-content .new-vicall-btn {
     position: fixed;
     right: 10vw;
     bottom: 13vh;
@@ -184,7 +185,8 @@ main {
     border-radius: 4px;
 }
 
-.chat-content .new-chat-btn i {
+.chat-content .new-chat-btn i, 
+.videocall-content .new-vicall-btn i {
     font-size: 1.5rem;
 }
 

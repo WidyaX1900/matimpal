@@ -44,6 +44,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/videocall/redialcall', [VideoCallController::class, 'redialCall'])->name('videocall.redialcall');
     
     Route::post('/videocall/togglemedia', [VideoCallController::class, 'toggleMedia'])->name('videocall.togglemedia');
+
+    Route::get('/videocall/newcall', [VideoCallController::class, 'newCall'])->name('videocall.newcall');
 });
 
 require __DIR__.'/auth.php';
