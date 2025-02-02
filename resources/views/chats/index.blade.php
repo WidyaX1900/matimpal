@@ -19,7 +19,7 @@
                 </li>
             @endfor
         </ul>
-        <a href="/chat/friends" class="new-chat-btn">
+        <a href="/friend" class="new-chat-btn">
             <i class="fa-solid fa-message"></i>
         </a>
     </section>

@@ -15,7 +15,7 @@ Route::middleware('auth')->group(function () {
         return view('chats.show');
     })->name('chat.show');
 
-    Route::get('/chat/friends', [FriendController::class, 'friends'])->name('chat.friends');
+    Route::get('/friend', [FriendController::class, 'index'])->name('friend.index');
     
     Route::get('/server/test', [ServerController::class, 'test'])->name('server.tes');
     

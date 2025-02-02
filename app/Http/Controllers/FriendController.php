@@ -20,13 +20,13 @@ class FriendController extends Controller
         $this->client = Client::create($this->nodejs_url);
     }
     
-    public function friends()
+    public function index()
     {
         $logged_name = Auth::user()->username;
         $users = User::where('username', '!=', $logged_name)
                 ->orderBy('id', 'desc')
                 ->get();
         
-        return view('chats.friends', ['friends' => $users]);
+        return view('friend.index', ['friends' => $users]);
     }
 }
