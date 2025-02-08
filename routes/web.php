@@ -16,6 +16,8 @@ Route::middleware('auth')->group(function () {
     
     Route::post('/chat/store', [ChatController::class, 'store'])->name('chat.store');
 
+    Route::post('/chat/get_all', [ChatController::class, 'getChatAll'])->name('chat.get_all');
+
     Route::get('/friend', [FriendController::class, 'index'])->name('friend.index');
     
     Route::get('/server/test', [ServerController::class, 'test'])->name('server.tes');

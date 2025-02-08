@@ -17,6 +17,7 @@ if(document.getElementById("chatPage")) {
             data: { receiver: friend, message },
             success: function (response) {
                 $textarea.val("");
+                getAllChat();
             },
 
             error: function (error) {
@@ -24,4 +25,25 @@ if(document.getElementById("chatPage")) {
             },
         });        
     });
+
+    function getAllChat() {
+        $.ajax({
+            headers: {
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+            },
+            url: "/chat/get_all",
+            method: "post",
+            dataType: "html",
+            data: { friend },
+            success: function (response) {
+                $(".show-chat-content ul").html(response);                
+            },
+
+            error: function (error) {
+                console.log(error);
+            },
+        });
+    }
+
+    getAllChat();
 }
