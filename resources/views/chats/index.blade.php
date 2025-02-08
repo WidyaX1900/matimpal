@@ -3,22 +3,27 @@
 @section('title', 'Chat')
 @section('content')
     <section class="chat-content">
-        <ul class="p-0">
-            @for ($i = 0; $i < 10; $i++)
-                <li class="mb-3">
-                    <a href="/chat/show">
-                        <i class="fa-solid fa-circle-user"></i>
-                        <div class="chat-info">
-                            <div class="friend-info">
-                                <strong>Friend Name</strong>
-                                <small>Last message</small>
+        @if ($chats->isEmpty())
+            <div class="vh-100 d-flex justify-content-center align-items-center">
+                No Chat Available
+            </div>
+        @else
+            <ul class="p-0">
+                @foreach ($chats as $chat)
+                    <li class="mb-3">
+                        <a href="/chat/show/{{ $chat->lawan_chat }}">
+                            <i class="fa-solid fa-circle-user"></i>
+                            <div class="chat-info">
+                                <div class="friend-info">
+                                    <strong>{{ $chat->name }}</strong>
+                                    <small>{{ $chat->message }}</small>
+                                </div>
                             </div>
-                            <small>19/01/2025</small>
-                        </div>
-                    </a>
-                </li>
-            @endfor
-        </ul>
+                        </a>
+                    </li>
+                @endforeach
+            </ul>            
+        @endif
         <a href="/friend" class="new-chat-btn">
             <i class="fa-solid fa-message"></i>
         </a>

@@ -8,9 +8,8 @@ use App\Http\Controllers\VideoCallController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth')->group(function () {
-    Route::get('/', function () {
-        return view('chats.index');
-    })->middleware(['auth', 'verified'])->name('home');
+    Route::get('/', [ChatController::class, 'index'])
+    ->middleware(['auth', 'verified'])->name('home');
 
     Route::get('/chat/show/{friend}', [ChatController::class, 'show'])->name('chat.show');
     
