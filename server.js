@@ -54,7 +54,9 @@ io.on("connection", (socket) => {
     
     socket.on("send-message", (data) => {
         const send_from = data.send_from;
+        const send_to = data.send_to;        
         socket.broadcast.emit("receive-message", { send_from });                
+        socket.broadcast.emit("receive-message-list", { send_to });                
     });
 
     socket.on("disconnect", () => {

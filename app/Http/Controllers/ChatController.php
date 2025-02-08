@@ -71,9 +71,12 @@ class ChatController extends Controller
             'date' => time()
         ]);
         
-        if($sendChat) echo json_encode([
+        if(!$sendChat) return; 
+        
+        $receiver_data = User::firstWhere('username', $receiver);
+        echo json_encode([
             'send_from' => $sender,
-            'send_to' => $receiver
+            'send_to' => $receiver_data->name
         ]);
     }
 

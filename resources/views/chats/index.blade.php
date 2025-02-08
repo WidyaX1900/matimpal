@@ -2,7 +2,7 @@
 @extends('layout.navbar')
 @section('title', 'Chat')
 @section('content')
-    <section class="chat-content">
+    <section id="chatPage" class="chat-content">
         @if ($chats->isEmpty())
             <div class="vh-100 d-flex justify-content-center align-items-center">
                 No Chat Available
