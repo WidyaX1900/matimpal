@@ -1,12 +1,13 @@
 if(document.getElementById("chatPage")) {
     const friend = $(".show-chat-content").data("friend").trim();
+    const user = $("nav").data("user");
     const socket = io.connect("http://127.0.0.1:3000/");
-    
-    $("#chatInput").on("click", "button", function() {
+
+    $("#chatInput").on("click", "button", function () {
         const $textarea = $(this).prev();
         const message = $textarea.val().trim();
-        if(message === "") return;
-        
+        if (message === "") return;
+
         $.ajax({
             headers: {
                 "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
@@ -16,6 +17,8 @@ if(document.getElementById("chatPage")) {
             dataType: "json",
             data: { receiver: friend, message },
             success: function (response) {
+                const send_from = response.send_from;
+                socket.emit("send-message", { send_from });
                 $textarea.val("");
                 getAllChat();
             },
@@ -23,9 +26,11 @@ if(document.getElementById("chatPage")) {
             error: function (error) {
                 console.log(error);
             },
-        });        
+        });
     });
+    getAllChat();
 
+    // Functions
     function getAllChat() {
         $.ajax({
             headers: {
@@ -36,7 +41,7 @@ if(document.getElementById("chatPage")) {
             dataType: "html",
             data: { friend },
             success: function (response) {
-                $(".show-chat-content ul").html(response);                
+                $(".show-chat-content ul").html(response);
             },
 
             error: function (error) {
@@ -44,6 +49,12 @@ if(document.getElementById("chatPage")) {
             },
         });
     }
+    // Functions
 
-    getAllChat();
+    // Sockets
+    socket.on("receive-message", (data) => {
+        if(data.send_from !== friend) return;
+        getAllChat();                
+    });
+    // Sockets
 }

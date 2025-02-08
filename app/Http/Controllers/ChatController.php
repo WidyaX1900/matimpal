@@ -60,7 +60,10 @@ class ChatController extends Controller
             'date' => time()
         ]);
         
-        if($sendChat) echo json_encode('success');
+        if($sendChat) echo json_encode([
+            'send_from' => $sender,
+            'send_to' => $receiver
+        ]);
     }
 
     /**

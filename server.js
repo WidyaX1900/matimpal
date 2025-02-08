@@ -51,6 +51,11 @@ io.on("connection", (socket) => {
         const room = data.room;
         socket.broadcast.to(room).emit("toggle-camera", data);
     });
+    
+    socket.on("send-message", (data) => {
+        const send_from = data.send_from;
+        socket.broadcast.emit("receive-message", { send_from });                
+    });
 
     socket.on("disconnect", () => {
         clearTimeout(disconnectTimeout);
