@@ -1,6 +1,5 @@
 if(document.getElementById("chatPage")) {
     const friend = $(".show-chat-content").data("friend").trim();
-    const user = $("nav").data("user");
     const socket = io.connect("http://127.0.0.1:3000/");
 
     $("#chatInput").on("click", "button", function () {
