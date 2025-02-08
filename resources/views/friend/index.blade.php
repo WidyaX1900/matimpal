@@ -7,11 +7,11 @@
     </a>
 @endsection
 @section('content')
-    <section class="chat-content">
+    <section id="chatPage" class="chat-content">
         <ul class="p-0 friend-list">
             @foreach ($friends as $friend)
                 <li class="mb-3">
-                    <a>
+                    <a href="/chat/show/{{ $friend->username }}">
                         <i class="fa-solid fa-circle-user text-secondary"></i>
                         <div class="chat-info">
                             <div class="friend-info">

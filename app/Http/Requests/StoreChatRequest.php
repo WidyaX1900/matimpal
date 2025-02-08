@@ -11,7 +11,7 @@ class StoreChatRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,8 @@ class StoreChatRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'receiver' => 'required',
+            'message' => 'required|string',
         ];
     }
 }

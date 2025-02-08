@@ -9,4 +9,11 @@ class Chat extends Model
 {
     /** @use HasFactory<\Database\Factories\ChatFactory> */
     use HasFactory;
+    protected $fillable = [
+        'sender',
+        'receiver',
+        'message',
+        'read',
+        'date',
+    ];
 }

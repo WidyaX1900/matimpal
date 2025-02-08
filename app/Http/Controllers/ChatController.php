@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Chat;
 use App\Http\Requests\StoreChatRequest;
 use App\Http\Requests\UpdateChatRequest;
+use Illuminate\Support\Facades\Auth;
 
 class ChatController extends Controller
 {
@@ -29,15 +30,30 @@ class ChatController extends Controller
      */
     public function store(StoreChatRequest $request)
     {
-        //
+        $sender = Auth::user()->username;
+        $receiver = $request->receiver;
+        $message = $request->message;
+        
+        $sendChat = Chat::create([
+            'sender' => $sender,
+            'receiver' => $receiver,
+            'message' => $message,
+            'read' => 0,
+            'date' => time()
+        ]);
+        
+        if($sendChat) echo json_encode('success');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Chat $chat)
+    public function show(Chat $chat, $friend)
     {
-        //
+        $data = [
+            'friend' => $friend
+        ];
+        return view('chats.show', $data);
     }
 
     /**

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ChatController;
 use App\Http\Controllers\FriendController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ServerController;
@@ -11,9 +12,9 @@ Route::middleware('auth')->group(function () {
         return view('chats.index');
     })->middleware(['auth', 'verified'])->name('home');
 
-    Route::get('/chat/show', function () {
-        return view('chats.show');
-    })->name('chat.show');
+    Route::get('/chat/show/{friend}', [ChatController::class, 'show'])->name('chat.show');
+    
+    Route::post('/chat/store', [ChatController::class, 'store'])->name('chat.store');
 
     Route::get('/friend', [FriendController::class, 'index'])->name('friend.index');
     
