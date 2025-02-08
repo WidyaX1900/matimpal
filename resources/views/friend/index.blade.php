@@ -7,7 +7,7 @@
     </a>
 @endsection
 @section('content')
-    <section id="chatPage" class="chat-content">
+    <section class="chat-content">
         <ul class="p-0 friend-list">
             @foreach ($friends as $friend)
                 <li class="mb-3">
