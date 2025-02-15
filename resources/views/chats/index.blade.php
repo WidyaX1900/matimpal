@@ -16,7 +16,7 @@
                             <div class="chat-info">
                                 <div class="friend-info">
                                     <strong>{{ $chat->name }}</strong>
-                                    <small>{{ $chat->message }}</small>
+                                    <small class="text-truncate">{{ $chat->message }}</small>
                                 </div>
                             </div>
                         </a>
