@@ -62,7 +62,7 @@ class ChatController extends Controller
         $sender = Auth::user()->username;
         $receiver = $request->receiver;
         $message = $request->message;
-        
+
         $sendChat = Chat::create([
             'sender' => $sender,
             'receiver' => $receiver,
