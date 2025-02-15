@@ -48,6 +48,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/videocall/togglemedia', [VideoCallController::class, 'toggleMedia'])->name('videocall.togglemedia');
 
     Route::get('/videocall/newcall', [VideoCallController::class, 'newCall'])->name('videocall.newcall');
+    
+    Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
 });
 
 require __DIR__.'/auth.php';

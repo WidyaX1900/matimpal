@@ -8,12 +8,9 @@
             <i class="fa-solid fa-video"></i>
             <small>Video Call</small>
         </a>
-        <form action="{{ route('logout') }}" method="POST">
-            @csrf
-            <button type="submit" class="category text-decoration-none">
-                <i class="fa-solid fa-circle-user"></i>
-                <small>Profile</small>
-            </button>
-        </form>
+        <a href="/profile" class="category text-decoration-none {{ request()->is('profile') ? 'active' : '' }}">
+            <i class="fa-solid fa-circle-user"></i>
+            <small>Profile</small>
+        </a>
     </footer>
 @endsection
